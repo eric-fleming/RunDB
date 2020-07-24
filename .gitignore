@@ -1,0 +1,18 @@
+# Dependency directories
+/node_modules
+/build
+/dist
+
+# dotenv environment variables file
+.env
+.env.test
+.env.production
+.enc.local
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Extraneous
+.DS_Store
