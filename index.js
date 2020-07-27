@@ -82,6 +82,32 @@ app.post('/addrunner', (req,res) => {
     })
 });
 
+app.put('/runners/:id', (req,res)=>{
+    runner_db_queries.editRunner(req.body)
+        .then(response => {
+            res.status(200).send(response);
+            console.log(`Processing PUT : ${req.body.first} ${req.body.last}`);
+        })
+        .catch(error => {
+            res.status(500).send(error)
+            console.log(`ERROR PUT : ${req.body.first} ${req.body.last}`);
+        })
+});
+
+app.delete('/runners/:id',(req,res)=>{
+    
+    runner_db_queries.deleteRunner(req.params.id)
+        .then(response => {
+            res.status(200).send(response);
+            console.log(`Processing DELETE : ID=${req.params.id}`);
+        })
+        .catch(error => {
+            res.status(500).send(error)
+            console.log(`ERROR DELETE : ID=${req.params.id}`);
+            console.log(error)
+        })
+});
+
 app.post('/addrun', (req, res) => {
 
     running_history_db_queries.createRun(req.body)
@@ -103,3 +129,9 @@ app.listen(port, () =>{
 });
 
 // '0.0.0.0' to opt out of local host
+/**
+ * console.log(req.params.id);
+    console.log('------------------------------');
+    console.log(req.body);
+    console.log(req.route);
+ */

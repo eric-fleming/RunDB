@@ -1,3 +1,5 @@
+const { request } = require('express');
+
 // LOGIN
 const Pool = require('pg').Pool;
 const pool = new Pool({
@@ -48,10 +50,42 @@ const createRunner = (body) => {
     });
 };
 
+const editRunner = (body) => {
+    return new Promise(function (resolve, reject) {
+        const { runnerid, first, last } = body;
+
+        let db_command = 'UPDATE public."Runners" SET first = $1, last = $2 WHERE id=$3';
+        pool.query(db_command, [first, last, runnerid], (error, results) => {
+            if (error) {
+                console.log(error)
+                reject(error)
+            }
+            resolve(`Runner with id=${runnerid} modified to: ${results.rows[0]}`)
+
+        });
+    });
+};
+
+
+const deleteRunner = (id) => {
+    return new Promise(function(resolve,reject){
+        const runnerID = parseInt(id);
+        let db_command = 'DELETE FROM public."Runners" WHERE id=$1';
+        pool.query(db_command, [runnerID], (error, results)=>{
+            if (error) {
+                reject(error)
+            }
+            resolve(`Runner with ID:${runnerID} was deleted.`)
+        });
+    });
+};
+
 
 // EXPORTS
 module.exports = {
     getAllRunners,
     getRunnerById,
-    createRunner
+    createRunner,
+    editRunner,
+    deleteRunner
 };

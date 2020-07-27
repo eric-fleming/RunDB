@@ -25,10 +25,9 @@ const getRunningHistory = () => {
 const createRun = (body) => {
     return new Promise(function (resolve, reject) {
         const { runnerid, date, distance, time } = body;
-        const pace = time / distance;
 
-        let db_command = 'INSERT INTO public."History" (date,distance,runnerid,time,pace) VALUES ($1,$2,$3,$4,$5)';
-        pool.query(db_command, [date, distance, runnerid, time, pace], (error, results) => {
+        let db_command = 'INSERT INTO public."History" (date,distance,runnerid,time) VALUES ($1,$2,$3,$4)';
+        pool.query(db_command, [date, distance, runnerid, time], (error, results) => {
             if (error) {
                 console.log(error)
                 reject(error)
