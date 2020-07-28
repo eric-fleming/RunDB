@@ -1,11 +1,17 @@
+//  APP DEPENDENCIES
 const dotenv = require('dotenv').config();
 const express = require('express');
 const app = express();
 const port = 3001;
 
+// ROUTES
+const runners = require('./routes/runner.routes');
+const runs = require('./routes/run.routes');
+
+// DATABASE QUERIES
 const runner_db_queries = require('./database/run_model');
 const running_history_db_queries = require('./database/running_history_db_queries');
-//const { response } = require('express');
+
 
 
 
@@ -22,6 +28,9 @@ app.use('/public', express.static('public'));
 
 
 // ROUTES
+app.use('/runners',runners);
+app.use('/runs',runs);
+
 app.get('/', (req, res) => {
     res.status(200).send('Server is running...');
 });
@@ -35,7 +44,7 @@ app.get('/error', (req, res) => {
 });
 
 
-app.get('/runs', (req, res) => {
+/* app.get('/runs', (req, res) => {
     running_history_db_queries.getRunningHistory()
         .then(response => {
             res.status(200).send({ data: response});
@@ -44,9 +53,9 @@ app.get('/runs', (req, res) => {
         .catch(error => {
             res.status(500).send(error);
         })
-});
+}); */
 
-app.get('/runners', (req, res) => {
+/* app.get('/runners', (req, res) => {
     runner_db_queries.getAllRunners()
         .then(response => {
             res.status(200).send({ data: response });
@@ -106,9 +115,9 @@ app.delete('/runners/:id',(req,res)=>{
             console.log(`ERROR DELETE : ID=${req.params.id}`);
             console.log(error)
         })
-});
+}); */
 
-app.post('/addrun', (req, res) => {
+/* app.post('/addrun', (req, res) => {
 
     running_history_db_queries.createRun(req.body)
         .then(response => {
@@ -119,7 +128,7 @@ app.post('/addrun', (req, res) => {
             res.status(500).send(error)
             console.log(`ERROR POST : runner=${req.body.runnerid} dist=${req.body.distance} time=${req.body.time}`);
         })
-});
+}); */
 
 
 
