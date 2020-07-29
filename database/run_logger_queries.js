@@ -1,4 +1,4 @@
-const runner_queries = require('./run_model');
+const runner_queries = require('./runner_model');
 const run_history_queries = require('./running_history_db_queries');
 
 

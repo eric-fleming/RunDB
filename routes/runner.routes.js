@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 // DATABASE QUERIES
-const runner_db_queries = require('../database/run_model');
+const runner_db_queries = require('../database/runner_model');
 
 // middleware that logs time
 router.use(function timeLog(req, res, next) {
