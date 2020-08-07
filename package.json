@@ -2,7 +2,7 @@
   "name": "rundb",
   "version": "1.0.0",
   "description": "PostgreSQL server",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "test": "jest"
