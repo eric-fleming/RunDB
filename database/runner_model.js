@@ -38,6 +38,7 @@ const getAllRunners = () => {
 const getRunnerById = (id) => {
     const client = CreateClient();
     return new Promise(function(resolve, reject){
+        client.connect();
         client.query('SELECT * FROM public."Runners" WHERE id= $1', [id], (error, result) => {
             if(error){
                 reject(error)
@@ -55,6 +56,7 @@ const createRunner = (body) => {
         const { first, last } = body;
 
         let db_command = 'INSERT INTO public."Runners" (first,last) VALUES ($1,$2)';
+        client.connect();
         client.query(db_command, [first, last], (error,results)=>{
             if (error) {
                 reject(error)
@@ -71,6 +73,7 @@ const editRunner = (body) => {
         const { runnerid, first, last } = body;
 
         let db_command = 'UPDATE public."Runners" SET first = $1, last = $2 WHERE id=$3';
+        client.connect();
         client.query(db_command, [first, last, runnerid], (error, results) => {
             if (error) {
                 console.log(error)
@@ -88,6 +91,7 @@ const deleteRunner = (id) => {
     return new Promise(function(resolve,reject){
         const runnerID = parseInt(id);
         let db_command = 'DELETE FROM public."Runners" WHERE id=$1';
+        client.connect();
         client.query(db_command, [runnerID], (error, results)=>{
             if (error) {
                 reject(error)
