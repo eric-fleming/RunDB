@@ -12,10 +12,10 @@ router.use(function timeLog(req, res, next) {
 // Base Route : /runners
 
 router.get('/', (req, res) => {
+    console.log(`Fetching runners...`);
     runner_db_queries.getAllRunners()
         .then(response => {
             res.status(200).send({ data: response });
-            console.log(`Fetching runners...`);
         })
         .catch(error => {
             res.status(500).send(error);

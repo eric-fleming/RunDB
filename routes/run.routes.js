@@ -9,10 +9,10 @@ router.use(function timeLog(req, res, next) {
 
 // Base Route : /runs
 router.get('/', (req, res) => {
+    console.log(`Fetching runs...`);
     run_table.getRunningHistory()
         .then(response => {
             res.status(200).send({ data: response });
-            console.log(`Fetching runs...`);
         })
         .catch(error => {
             res.status(500).send(error);
