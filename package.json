@@ -10,8 +10,10 @@
   "author": "eric fleming",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "mongoose": "^5.9.28",
     "pg": "^8.3.0"
   },
   "devDependencies": {
