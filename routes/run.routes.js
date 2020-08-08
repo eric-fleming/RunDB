@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const run_table = require('../database/running_history_db_queries');
+const run_table = require('../databases/postgresql/running_history_db_queries');
 // middleware that logs time
 router.use(function timeLog(req, res, next) {
     console.log('Time: ', Date.now())
