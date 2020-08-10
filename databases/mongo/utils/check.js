@@ -1,3 +1,16 @@
+/**
+ * For helping data transformations with databases
+ * @module Check
+ */
+
+/**
+ * Add this value to the array if it is not already in the array.
+ * 
+ * @param {Object[]} array - a list of ObjectIDs from MongoDB 
+ * @param {string} value  - the target ObjectID that you are looking to add 
+ * @returns {string[]}
+ * @
+ */
 function pushIfNotPresent(array,value){
     if(Array.isArray(array)){
         let present = false;
