@@ -10,6 +10,7 @@ const app = express();
 const runners = require('./routes/runner.routes');
 const runs = require('./routes/run.routes');
 const friends = require('./routes/friends.route');
+const mongo = require('./routes/mongo.routes');
 
 // MIDDLEWARE
 app.use(express.json());
@@ -29,6 +30,7 @@ app.use('/public', express.static('public'));
 app.use('/runners', runners);
 app.use('/runs', runs);
 app.use('/friends', friends);
+app.use('/mongo', mongo);
 
 app.get('/', (req, res) => {
     res.status(200).send('Server is running...');

@@ -1,5 +1,4 @@
-const Mongoose = require("mongoose");
-
+const Mongoose = require('mongoose');
 const Schema = Mongoose.Schema;
 
 const friendSchema = new Schema({

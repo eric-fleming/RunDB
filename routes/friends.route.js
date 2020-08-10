@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Friends = require('../databases/mongo/models/friends.model');
-
+const runners = require('../databases/mongo/models/runner.model');
 
 
 // middleware that logs time
