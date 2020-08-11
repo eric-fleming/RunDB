@@ -1,6 +1,6 @@
 /**
  * For helping data transformations with databases
- * @module Check
+ * @module MongoUtils
  */
 
 /**
