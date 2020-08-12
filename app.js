@@ -46,11 +46,18 @@ app.get('/error', (req, res) => {
 
 // CLOUD DATABASE
 const mongo_atlas_uri = process.env.MONGO_ATLAS_URI;
-mongoose.connect(mongo_atlas_uri, { 
-    useNewUrlParser: true, 
+const mongo_config = {
+    useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true
-});
+}
+mongoose.connect(mongo_atlas_uri, mongo_config)
+    .then(() =>{
+        console.log('Successfully connected to Mongo Atlas');
+    })
+    .catch(err => {
+        console.error('Could not connect to Mongo Atlas');
+    });
 
 const connection = mongoose.connection;
 connection.once('open', () =>{
