@@ -113,8 +113,8 @@ router.post('/runner', (req,res) => {
     console.log(req.body);
     const newRunnerRecord = new RunnerCollection({
         name: {
-            first: req.body.firstName,
-            last: req.body.lastName
+            first: req.body.first,
+            last: req.body.last
         },
         location: {
             city: req.body.city,
