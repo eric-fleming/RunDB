@@ -108,7 +108,7 @@ router.put('/runner/registerFollower', (req,res) => {
  * @property {string} req.body.searchable
  * @returns {json}
  */
-router.post('/addRunner', (req,res) => {
+router.post('/runner', (req,res) => {
     const friends = req.body.friends;
 
     const newRunnerRecord = new RunnerCollection({
@@ -120,7 +120,7 @@ router.post('/addRunner', (req,res) => {
             city: req.body.city,
             country: req.body.country
         },
-        searchable: req.body.searchable
+        searchable: true
     });
 
     newRunnerRecord.save()
