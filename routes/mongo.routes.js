@@ -109,8 +109,8 @@ router.put('/runner/registerFollower', (req,res) => {
  * @returns {json}
  */
 router.post('/runner', (req,res) => {
-    const friends = req.body.friends;
-
+    
+    console.log(req.body);
     const newRunnerRecord = new RunnerCollection({
         name: {
             first: req.body.firstName,
