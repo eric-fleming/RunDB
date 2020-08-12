@@ -46,7 +46,12 @@ app.get('/error', (req, res) => {
 
 // CLOUD DATABASE
 const mongo_atlas_uri = process.env.MONGO_ATLAS_URI;
-mongoose.connect(mongo_atlas_uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
+mongoose.connect(mongo_atlas_uri, { 
+    useNewUrlParser: true, 
+    useCreateIndex: true,
+    useUnifiedTopology: true
+});
+
 const connection = mongoose.connection;
 connection.once('open', () =>{
     console.log('MongoDB Atlas connection successfully established');
