@@ -1,11 +1,9 @@
-/**
- * For connecting with Mongo Atlas and applying CRUD operations
- * @module MongoRoutes
- */
+
 const express = require('express');
 const router = express.Router();
 const Friends = require('../databases/mongo/models/friends.model');
-const RunnerCollection = require('../databases/mongo/models/runner.model');
+const RunnerCollection = require('../databases/mongo/models/runner.model').Runner;
+const RunCollection = require('../databases/mongo/models/run.model').Run;
 const Update = require('../databases/mongo/utils/check');
 
 
@@ -15,14 +13,10 @@ router.use(function timeLog(req, res, next) {
     next()
 });
 
+// ---------------------------------------------------------------------------------
+// ---------------------------------RUNNER ROUTES-----------------------------------
+// ---------------------------------------------------------------------------------
 
-// ROUTES
-/**
- * Grab all inforamation about a specific runner
- * @function getRunnerByID
- * @param {string} :id
- * @returns {json} 
- */
 router.get('/runner/:id', (req, res) => {
     RunnerCollection.findById(req.params.id)
         .then(runner => res.json(runner))
@@ -30,11 +24,7 @@ router.get('/runner/:id', (req, res) => {
 });
 
 
-/**
- * Grab all inforamation for all the runners in the database
- * @function getRunners
- * @returns {json}
- */
+
 router.get('/runners', (req, res) => {
     RunnerCollection.find()
         .then(runners => res.json(runners))
@@ -42,12 +32,7 @@ router.get('/runners', (req, res) => {
 });
 
 
-/**
- * Delete inforamation about a specific runner
- * @function deleteRunnerById
- * @param {string} :id
- * @returns {json}
- */
+
 router.delete('/runner/:id', (req, res) => {
     RunnerCollection.findByIdAndDelete(req.params.id)
         .then(() => res.json(`Runner ${req.params.id} was deleted...`))
@@ -55,13 +40,6 @@ router.delete('/runner/:id', (req, res) => {
 });
 
 
-/**
- * A runner adds another runner to their following field
- * @function follow
- * @property {string} req.body.runnerID
- * @property {string} req.body.subRunnerID
- * @returns {json}
- */
 router.put('/runner/follow', (req, res) => {
     //add them to my following
 
@@ -78,13 +56,6 @@ router.put('/runner/follow', (req, res) => {
 });
 
 
-/**
- * A runner adds themselves to another runner'f follower field
- * @function registerFollower
- * @property {string} req.body.runnerID
- * @property {string} req.body.subRunnerID
- * @returns {json}
- */
 router.put('/runner/registerFollower', (req,res) => {
     // add myself to their followers
     RunnerCollection.findById(req.body.subRunnerID)
@@ -98,16 +69,7 @@ router.put('/runner/registerFollower', (req,res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 })
 
-/**
- * Add a new runner to the database
- * @function addRunner
- * @property {string} req.body.firstName
- * @property {string} req.body.lastName
- * @property {string} req.body.city
- * @property {string} req.body.country
- * @property {string} req.body.searchable
- * @returns {json}
- */
+
 router.post('/runner', (req,res) => {
     
     console.log(req.body);
@@ -129,10 +91,47 @@ router.post('/runner', (req,res) => {
 });
 
 
+// ---------------------------------------------------------------------------------
+// ---------------------------------RUN ROUTES-----------------------------------
+// ---------------------------------------------------------------------------------
 
+router.get('/runs', (req, res) => {
+    RunCollection.find()
+        .then(runs => res.json(runs))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
 
+router.get('/run/:id', (req, res) => {
+    RunCollection.findById(req.params.id)
+        .then(run => res.json(run))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
 
+router.post('/run', (req, res) => {
 
+    console.log(req.body);
+    const newRunRecord = new RunCollection({
+        runner_id: req.body.runner_id,
+        date: req.body.date,
+        distance: req.body.distance,
+        time: req.body.time,
+        searchable: true
+    });
+
+    newRunRecord.save()
+        .then(run => res.json('run record added'))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+router.delete('/run/:id', (req, res) => {
+    RunCollection.findByIdAndDelete(req.params.id)
+        .then(() => res.json(`Run ${req.params.id} was deleted...`))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+// ---------------------------------------------------------------------------------
+// ---------------------------------FRIEND ROUTES-----------------------------------
+// ---------------------------------------------------------------------------------
 // OLD ROUTES FOR TEMPLATING
 router.get('/getFriends', (req, res) => {
     Friends.find()
