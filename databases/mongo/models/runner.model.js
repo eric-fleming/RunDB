@@ -1,6 +1,6 @@
 const Mongoose = require('mongoose');
 const Schema = Mongoose.Schema;
-const RunSchema = require('./run.model');
+const { RunSchema } = require('./run.model');
 
 
 const RunnerSchema = new Schema({
@@ -37,4 +37,7 @@ const RunnerSchema = new Schema({
 
 
 const Runner = Mongoose.model('runners', RunnerSchema);
-module.exports = Runner;
+module.exports = {
+    Runner,
+    RunnerSchema
+};

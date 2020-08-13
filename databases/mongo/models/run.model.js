@@ -8,7 +8,14 @@ const RunSchema = new Schema({
     date: Date,
     distance: Number,
     time: Number
+    }, {
+    timestamps: true
+});
 
-})
 
-module.exports = RunSchema;
+const Run = Mongoose.model('runs', RunSchema);
+
+module.exports = {
+    RunSchema,
+    Run
+};
