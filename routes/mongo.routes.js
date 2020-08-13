@@ -44,7 +44,7 @@ router.delete('/runner/:id', (req, res) => {
 router.put('/runner', (req, res) => {
     //update the name
 
-    RunnerCollection.findById(req.body.runnerID)
+    RunnerCollection.findById(req.body.runner_id)
         .then(runner => {
             runner.name.first = req.body.first || runner.name.first;
             runner.name.last = req.body.last || runner.name.last;
