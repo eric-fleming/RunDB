@@ -41,6 +41,23 @@ router.delete('/runner/:id', (req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.put('/runner', (req, res) => {
+    //update the name
+
+    RunnerCollection.findById(req.body.runnerID)
+        .then(runner => {
+            runner.name.first = req.body.first || runner.name.first;
+            runner.name.last = req.body.last || runner.name.last;
+            runner.location.city = req.body.city || runner.location.city;
+            runner.location.country = req.body.country || runner.location.country;
+
+            runner.save()
+                .then(() => res.json(`updated ${req.body.runnerID}`))
+                .catch(err => res.status(400).json('Error: ' + err));
+        })
+        .catch(err => res.status(400).json('Error: ' + err));
+
+});
 
 router.put('/runner/follow', (req, res) => {
     //add them to my following
