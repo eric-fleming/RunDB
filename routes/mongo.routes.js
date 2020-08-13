@@ -9,7 +9,9 @@ const Update = require('../databases/mongo/utils/check');
 
 // middleware that logs time
 router.use(function timeLog(req, res, next) {
-    console.log('Time: ', Date.now())
+    let now = Date.now();
+    let utc = (new Date()).toUTCString();
+    console.log(`Date: ${utc} ----> Miliseconds: ${now}`);
     next()
 });
 
@@ -17,7 +19,7 @@ router.use(function timeLog(req, res, next) {
 // ---------------------------------RUNNER ROUTES-----------------------------------
 // ---------------------------------------------------------------------------------
 
-router.get('/runner/:id', (req, res) => {
+router.get('runner/:id', (req, res) => {
     RunnerCollection.findById(req.params.id)
         .then(runner => res.json(runner))
         .catch(err => res.status(400).json('Error: ' + err));
@@ -25,7 +27,7 @@ router.get('/runner/:id', (req, res) => {
 
 
 
-router.get('/runners', (req, res) => {
+router.get('runners', (req, res) => {
     RunnerCollection.find()
         .then(runners => res.json(runners))
         .catch(err => res.status(400).json('Error: ' + err));
@@ -33,14 +35,14 @@ router.get('/runners', (req, res) => {
 
 
 
-router.delete('/runner/:id', (req, res) => {
+router.delete('runner/:id', (req, res) => {
     RunnerCollection.findByIdAndDelete(req.params.id)
         .then(() => res.json(`Runner ${req.params.id} was deleted...`))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
 
-router.put('/runner/follow', (req, res) => {
+router.put('runner/follow', (req, res) => {
     //add them to my following
 
     RunnerCollection.findById(req.body.runnerID)
@@ -56,7 +58,7 @@ router.put('/runner/follow', (req, res) => {
 });
 
 
-router.put('/runner/registerFollower', (req,res) => {
+router.put('runner/registerFollower', (req,res) => {
     // add myself to their followers
     RunnerCollection.findById(req.body.subRunnerID)
         .then(runner => {
@@ -70,7 +72,7 @@ router.put('/runner/registerFollower', (req,res) => {
 })
 
 
-router.post('/runner', (req,res) => {
+router.post('runner', (req,res) => {
     
     console.log(req.body);
     const newRunnerRecord = new RunnerCollection({
@@ -95,19 +97,19 @@ router.post('/runner', (req,res) => {
 // ---------------------------------RUN ROUTES-----------------------------------
 // ---------------------------------------------------------------------------------
 
-router.get('/runs', (req, res) => {
+router.get('runs', (req, res) => {
     RunCollection.find()
         .then(runs => res.json(runs))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.get('/run/:id', (req, res) => {
+router.get('run/:id', (req, res) => {
     RunCollection.findById(req.params.id)
         .then(run => res.json(run))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.post('/run', (req, res) => {
+router.post('run', (req, res) => {
 
     console.log(req.body);
     const newRunRecord = new RunCollection({
@@ -123,7 +125,7 @@ router.post('/run', (req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.delete('/run/:id', (req, res) => {
+router.delete('run/:id', (req, res) => {
     RunCollection.findByIdAndDelete(req.params.id)
         .then(() => res.json(`Run ${req.params.id} was deleted...`))
         .catch(err => res.status(400).json('Error: ' + err));
