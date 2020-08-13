@@ -52,7 +52,7 @@ router.put('/runner/:id', (req, res) => {
             runner.location.country = req.body.country || runner.location.country;
 
             runner.save()
-                .then(() => res.json(`updated ${req.body.runnerID}`))
+                .then(() => res.json(`updated ${req.params.id}`))
                 .catch(err => res.status(400).json('Error: ' + err));
         })
         .catch(err => res.status(400).json('Error: ' + err));
@@ -140,6 +140,23 @@ router.post('/run', (req, res) => {
     newRunRecord.save()
         .then(run => res.json('run record added'))
         .catch(err => res.status(400).json('Error: ' + err));
+});
+
+router.put('/run/:id', (req, res) => {
+    //update the name
+
+    RunCollection.findById(req.params.id)
+        .then(run => {
+            run.date = req.body.date || run.date;
+            run.distance = req.body.distance || run.distance;
+            run.time = req.body.time || run.time;
+
+            run.save()
+                .then(() => res.json(`updated run : ${req.params.id}`))
+                .catch(err => res.status(400).json('Error: ' + err));
+        })
+        .catch(err => res.status(400).json('Error: ' + err));
+
 });
 
 router.delete('/run/:id', (req, res) => {
