@@ -41,10 +41,10 @@ router.delete('/runner/:id', (req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.put('/runner', (req, res) => {
+router.put('/runner/:id', (req, res) => {
     //update the name
 
-    RunnerCollection.findById(req.body.runner_id)
+    RunnerCollection.findById(req.params.id)
         .then(runner => {
             runner.name.first = req.body.first || runner.name.first;
             runner.name.last = req.body.last || runner.name.last;
